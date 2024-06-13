@@ -22,6 +22,13 @@ class Product(models.Model):
 
     class Meta():
         db_table = 'store_products'
+    
+    def get_price(self):
+        return self.sale_price
+    
+    def get_display_price(self):
+        # for now we will just use sale_price later we will allow for great sales date
+        return '{:.2f}'.format(self.sale_price)
 
 
 class ProductCourse(models.Model):
@@ -39,5 +46,5 @@ class ProductCourse(models.Model):
 class Cart(models.Model):
     id = models.CharField(primary_key=True, max_length=32)
     cart_data = models.TextField()
-    cart_settings = models.JSONField()
+    cart_settings = models.JSONField(null=True)
 
