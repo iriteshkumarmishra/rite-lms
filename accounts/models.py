@@ -64,5 +64,36 @@ class User(AbstractUser):
 
     class Meta:
         db_table = 'users'
+    
+
+    def get_full_name(self):
+        return self.first_name + " " + self.last_name
+
+
+
+class StoreAddress(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    address_line_1 = models.CharField(max_length=255)
+    address_line_2 = models.CharField(max_length=255)
+    state = models.CharField(max_length=2)
+    city = models.CharField(max_length=100)
+    zip = models.CharField(max_length=10)
+    country = models.CharField(max_length=10, default='US')
+
+    class Meta():
+        db_table = 'store_addresses'
+
+
+class UserAddress(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, related_name='user_address', on_delete=models.CASCADE)
+    address = models.ForeignKey(StoreAddress, related_name='account_address', on_delete=models.PROTECT)
+    is_default = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    
+    class Meta():
+        db_table = 'user_addresses'
 
 
