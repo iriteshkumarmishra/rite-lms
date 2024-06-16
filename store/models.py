@@ -67,6 +67,12 @@ class Order(models.Model):
 
     class Meta():
         db_table = 'store_orders'
+    
+    STATUS_PAYMENT_PENDING = 1
+    STATUS_PAYMENT_COMPLETED = 2
+    STATUS_PAYMENT_CANCELED = 3
+    STATUS_PAYMENT_REFUNDED = 4
+    STATUS_PAYMENT_FAILED = 5
 
 
 class OrderItem(models.Model):

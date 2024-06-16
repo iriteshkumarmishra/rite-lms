@@ -74,7 +74,7 @@ class User(AbstractUser):
 class StoreAddress(models.Model):
     id = models.BigAutoField(primary_key=True)
     address_line_1 = models.CharField(max_length=255)
-    address_line_2 = models.CharField(max_length=255)
+    address_line_2 = models.CharField(max_length=255, null=True)
     state = models.CharField(max_length=2)
     city = models.CharField(max_length=100)
     zip = models.CharField(max_length=10)
@@ -88,6 +88,7 @@ class UserAddress(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, related_name='user_address', on_delete=models.CASCADE)
     address = models.ForeignKey(StoreAddress, related_name='account_address', on_delete=models.PROTECT)
+    full_name = models.CharField(max_length=255, null=True)
     is_default = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
